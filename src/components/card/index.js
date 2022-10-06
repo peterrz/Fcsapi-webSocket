@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { If, Then } from "react-if";
 import Table from "../Table/Table";
 import { ReactComponent as EmptyBox } from "../../assets/img/empty-box.svg";

@@ -1,19 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   useTable,
   useSortBy,
-  useFilters,
   useResizeColumns,
   usePagination,
   useRowSelect,
-  useGlobalFilter,
 } from "react-table";
-import { If, Then, Else } from "react-if";
 import { useMediaQuery } from "react-responsive";
 import { ReactComponent as More } from "../../assets/img/more.svg";
+import moment from "moment";
 
 // components
-
 const Table = (props) => {
   const Responsive = useMediaQuery({ minWidth: 768 });
 
@@ -26,8 +23,7 @@ const Table = (props) => {
       data: props.data,
       initialState: props.initialState,
     },
-    useGlobalFilter,
-    useFilters,
+
     useSortBy,
     useResizeColumns,
     usePagination,
@@ -39,12 +35,6 @@ const Table = (props) => {
 
   const [tempFilter, setTempFilter] = useState([]);
   const [modal, setModal] = useState(false);
-  useEffect(() => {
-    if (props.getInstance) {
-      props.getInstance(tableInstance);
-    }
-    // eslint-disable-next-line
-  }, []);
 
   const OpenModal = () => {
     setTempFilter(mobileColumn);
@@ -128,7 +118,9 @@ const Table = (props) => {
                         } `,
                       }}
                     >
-                      {cell.render("Cell")}
+                      {cell.column.Header === "Time"
+                        ? moment(cell.column.value).format("LTS")
+                        : cell.render("Cell")}
                     </td>
                   );
                 })}
@@ -171,22 +163,22 @@ const Table = (props) => {
                     })}
                 </div>
                 {/*footer*/}
-                <div className="flex items-center   justify-between w-full p-8  ">
+                <div className="flex items-center gap-5  justify-between w-full p-8  ">
                   <button
                     className="text-Light-title  bg-[#F8F9FE] font-semibold w-6/12 uppercase px-6  py-5 rounded-lg text-sm outline-none focus:outline-none ml-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setModal(false)}
                   >
-                    cancel
+                    Cancel
                   </button>
                   <button
-                    className="bg-gray-700 text-white   active:bg-gray-700 w-6/12  uppercase text-sm px-6 py-5 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-primary text-white   active:bg-primary w-6/12  uppercase text-sm px-6 py-5 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
                       updateFilter();
                     }}
                   >
-                    add
+                    Add
                   </button>
                 </div>
               </div>
