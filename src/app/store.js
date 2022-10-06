@@ -1,8 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-
+import { configureStore } from "@reduxjs/toolkit";
+import socketReducer from "../features/websocket/socketSlice";
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    socket: socketReducer,
   },
 });
